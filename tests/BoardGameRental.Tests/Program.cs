@@ -25,7 +25,23 @@ internal static partial class Program
             ("Valid catalog with no matches", NoMatches),
             ("Invalid sample produces no partial catalog", InvalidFile),
             ("Malformed JSON rejected", MalformedFile),
-            ("Missing file reported safely", MissingFile)
+            ("Missing file reported safely", MissingFile),
+            ("FactorySuccess", FactorySuccess),
+            ("FactoryRules", FactoryRules),
+            ("FactoryBoundaries", FactoryBoundaries),
+            ("FactoryPreservesInput", FactoryPreservesInput),
+            ("WorkflowCases", WorkflowCases),
+            ("ConfirmationSuccess", ConfirmationSuccess),
+            ("MissingPrerequisite", MissingPrerequisite),
+            ("RepeatedConfirmation", RepeatedConfirmation),
+            ("FailedPreparationPreservesState", FailedPreparationPreservesState),
+            ("TariffNames", TariffNames),
+            ("QuantityPricing", QuantityPricing),
+            ("TariffRounding", TariffRounding),
+            ("StudentBooking", StudentBooking),
+            ("CatalogBooking", CatalogBooking),
+            ("UnknownCatalogGame", UnknownCatalogGame),
+            ("FileAndCatalogPreserved", FileAndCatalogPreserved)
         };
 
         int failures = 0;
