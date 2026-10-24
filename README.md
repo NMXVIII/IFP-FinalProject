@@ -4,7 +4,7 @@
 Пользователи: клиент и сотрудник проката. Данные берутся из JSON-каталога.
 Подтверждение работает с неизменяемым снимком: проект не списывает остатки и не выполняет оплату.
 
-**Снимок 1/4: Issen Daiana — Result и фабрика.**
+**Снимок 2/4: Kabdrakhmanova Zarina — Отсутствующие значения и тарифы.**
 Включены все предыдущие этапы. Полный консольный сценарий Assignment 7 появляется в снимке 04.
 Функциональность и все 34 теста Assignments 5–6 сохранены в каждом архиве.
 
@@ -18,7 +18,7 @@ dotnet build BoardGameRental.sln
 dotnet run --project tests/BoardGameRental.Tests
 ```
 
-Ожидаемый результат этого снимка: **40/40 passed; 0 failed**.
+Ожидаемый результат этого снимка: **45/45 passed; 0 failed**.
 Проверен архив после чистой распаковки: сборка без предупреждений и ошибок.
 Точные команды и результаты проверки: `docs/TEST_RESULTS.txt`.
 Тесты используют консольный runner с утверждениями: запускайте через `dotnet run`, а не `dotnet test`.
@@ -33,7 +33,7 @@ dotnet run --project tests/BoardGameRental.Tests
 | Порядок | Участник | Группа | Задача Assignment 7 | Основные файлы и тесты | Статус в этом снимке |
 |---|---|---|---|---|---|---|
 | 1 | Issen Daiana | IT-2511 | Success/Failure, Map, Bind, Match; ошибки количества, остатка, отсутствующей игры; повторное использование фабрики задания 6 | `Result.cs; ValidatedRentalOutcomes.cs`; `ResultFactoryTests.cs` | Включён |
-| 2 | Kabdrakhmanova Zarina | IT-2511 | Some/None; поиск игры и цены; преобразование None в Result; проверка названия тарифа | `Option.cs; RentalTariffOutcomes.cs`; `OptionTariffTests.cs` | Следующий этап |
+| 2 | Kabdrakhmanova Zarina | IT-2511 | Some/None; поиск игры и цены; преобразование None в Result; проверка названия тарифа | `Option.cs; RentalTariffOutcomes.cs`; `OptionTariffTests.cs` | Включён |
 | 3 | Kurmashev Damir | IT-2511 | Цепочка поиска, подготовки и подтверждения; Map/Bind; ошибки порядка операций; повторное подтверждение | `RentalOutcomes.cs`; `ResultWorkflowTests.cs` | Следующий этап |
 | 4 | Nurlanbek Marghulan | IT-2511 | JSON и файловые ошибки; консольные команды; один обработчик результата; соединение всех модулей | `CatalogBoundary.cs; ExceptionConsole.cs; Program.cs; demo7.bat`; `BoundaryOutcomeTests.cs` | Следующий этап |
 
@@ -147,7 +147,7 @@ Map принимает `T -> U` и оборачивает новое значе�
 
 ## Тесты текущего снимка
 
-34 теста прежних заданий плюс 6 новых. Каждый тест использует проверки значений,
+34 теста прежних заданий плюс 11 новых. Каждый тест использует проверки значений,
 при несовпадении завершается ошибкой. Полный фактический список: `docs/TEST_RESULTS.txt`.
 В новых файловых тестах используются уникальные временные папки с очисткой в finally;
 входные fixtures находятся в `sample-data/`.
@@ -160,6 +160,11 @@ Map принимает `T -> U` и оборачивает новое значе�
 | Issen Daiana | A7RejectsNullPayload | Success с null не создаётся |
 | Issen Daiana | A7ValidatedFactorySuccess | Uno: 3 дня, 1 копия, student => 1200 KZT; вход не изменён |
 | Issen Daiana | A7ValidatedFactoryFailures | GameNotFound, InvalidQuantity, InsufficientStock, ValidationRejected; правила дней, бюджета и тарифа действуют |
+| Kabdrakhmanova Zarina | A7LookupPresentAbsent | Uno находится, ID 999 возвращает None |
+| Kabdrakhmanova Zarina | A7PrimitiveValuesPresent | Цена 0, false и пустая строка являются присутствующими значениями |
+| Kabdrakhmanova Zarina | A7MissingBecomesFailure | None становится GameNotFound, Some становится Success |
+| Kabdrakhmanova Zarina | A7TariffLookupSuccess | STANDARD с пробелами и Student нормализуются; цена student 1200 |
+| Kabdrakhmanova Zarina | A7TariffLookupFailure | null, пустая строка, both и vip дают UnknownTariff |
 
 ## Состояние разработки
 

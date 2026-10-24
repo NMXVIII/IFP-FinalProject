@@ -47,7 +47,12 @@ internal static partial class Program
             ("A7FailureSkipsFunctions", A7FailureSkipsFunctions),
             ("A7RejectsNullPayload", A7RejectsNullPayload),
             ("A7ValidatedFactorySuccess", A7ValidatedFactorySuccess),
-            ("A7ValidatedFactoryFailures", A7ValidatedFactoryFailures)
+            ("A7ValidatedFactoryFailures", A7ValidatedFactoryFailures),
+            ("A7LookupPresentAbsent", A7LookupPresentAbsent),
+            ("A7PrimitiveValuesPresent", A7PrimitiveValuesPresent),
+            ("A7MissingBecomesFailure", A7MissingBecomesFailure),
+            ("A7TariffLookupSuccess", A7TariffLookupSuccess),
+            ("A7TariffLookupFailure", A7TariffLookupFailure)
         };
 
         int failures = 0;

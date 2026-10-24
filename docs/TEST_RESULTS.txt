@@ -1,11 +1,11 @@
 Clean ZIP extraction, 2026-10-22, Windows, .NET SDK 8.0.425.
-Stage 1/4: Issen Daiana.
+Stage 2/4: Kabdrakhmanova Zarina.
 
 $ dotnet build BoardGameRental.sln --nologo -m:1 -p:UseSharedCompilation=false -nr:false --disable-build-servers
   Определение проектов для восстановления...
-  Восстановлен <project>\src\BoardGameRental.App\BoardGameRental.App.csproj (за 117 мс).
-  Восстановлен <project>\src\BoardGameRental.Core\BoardGameRental.Core.csproj (за 106 мс).
-  Восстановлен <project>\tests\BoardGameRental.Tests\BoardGameRental.Tests.csproj (за 117 мс).
+  Восстановлен <project>\src\BoardGameRental.App\BoardGameRental.App.csproj (за 125 мс).
+  Восстановлен <project>\tests\BoardGameRental.Tests\BoardGameRental.Tests.csproj (за 125 мс).
+  Восстановлен <project>\src\BoardGameRental.Core\BoardGameRental.Core.csproj (за 110 мс).
   BoardGameRental.Core -> <project>\src\BoardGameRental.Core\bin\Debug\net8.0\BoardGameRental.Core.dll
   BoardGameRental.App -> <project>\src\BoardGameRental.App\bin\Debug\net8.0\BoardGameRental.App.dll
   BoardGameRental.Tests -> <project>\tests\BoardGameRental.Tests\bin\Debug\net8.0\BoardGameRental.Tests.dll
@@ -14,7 +14,7 @@ $ dotnet build BoardGameRental.sln --nologo -m:1 -p:UseSharedCompilation=false -
     Предупреждений: 0
     Ошибок: 0
 
-Прошло времени 00:00:09.78
+Прошло времени 00:00:10.11
 
 Exit: 0
 $ dotnet run --project tests/BoardGameRental.Tests --no-build
@@ -58,7 +58,12 @@ PASS: A7FailureSkipsFunctions
 PASS: A7RejectsNullPayload
 PASS: A7ValidatedFactorySuccess
 PASS: A7ValidatedFactoryFailures
+PASS: A7LookupPresentAbsent
+PASS: A7PrimitiveValuesPresent
+PASS: A7MissingBecomesFailure
+PASS: A7TariffLookupSuccess
+PASS: A7TariffLookupFailure
 
-40/40 passed; 0 failed.
+45/45 passed; 0 failed.
 
 Exit: 0
