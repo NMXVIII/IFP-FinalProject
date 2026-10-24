@@ -1,0 +1,13 @@
+BoardGameRental - Assignment 5
+Catalog records: 6; days: 3; budget: 3000.00 KZT
+
+Standard
+ 4 | Chess           | Classic    | 3 days | 0.00 KZT
+ 2 | Uno             | Card       | 3 days | 1500.00 KZT
+ 1 | Monopoly        | Family     | 3 days | 3000.00 KZT
+
+Student (20% discount)
+ 4 | Chess           | Classic    | 3 days | 0.00 KZT
+ 2 | Uno             | Card       | 3 days | 1200.00 KZT
+ 1 | Monopoly        | Family     | 3 days | 2400.00 KZT
+ 6 | Carcassonne     | Strategy   | 3 days | 3000.00 KZT
