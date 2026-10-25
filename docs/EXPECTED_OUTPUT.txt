@@ -1,9 +1,7 @@
-Actual Assignment 5/6 command output after applying stage 3, 2026-10-25.
-The Assignment 7 Result chain is checked by A7CompleteBookingChain and the other workflow tests.
-The Assignment 7 console commands are added in stage 4.
+Actual run, stage 4/4, 2026-10-25, macOS, .NET SDK 8.0.425.
 
-$ dotnet run --project src/BoardGameRental.App --no-build
-BoardGameRental - Assignments 5 and 6
+$ dotnet run --project src/BoardGameRental.App --no-build -- 
+BoardGameRental - Assignments 5, 6 and 7
 Catalog records: 6; days: 3; budget: 3000.00 KZT
 
 Standard
@@ -20,7 +18,7 @@ Student (20% discount)
 Exit: 0
 
 $ dotnet run --project src/BoardGameRental.App --no-build -- --demo
-BoardGameRental - Assignments 5 and 6
+BoardGameRental - Assignments 5, 6 and 7
 Missing prerequisite:
 Rejected: Prepare the rental before confirmation. State: Draft.
 Valid operation:
@@ -31,5 +29,85 @@ Insufficient stock:
 Rejected: Quantity exceeds available copies. State: Draft.
 Insufficient budget:
 Rejected: Total price exceeds budget. State: Draft.
+
+Exit: 0
+
+$ dotnet run --project src/BoardGameRental.App --no-build -- --book sample-data/games.json 2 3 1 3000 student
+BoardGameRental - Assignments 5, 6 and 7
+Confirmed: Uno; days: 3; quantity: 1; tariff: student; total: 1200.00 KZT.
+
+Exit: 0
+
+$ dotnet run --project src/BoardGameRental.App --no-build -- --demo7
+BoardGameRental - Assignments 5, 6 and 7
+Success / present lookup:
+Confirmed: Uno; days: 3; quantity: 1; tariff: student; total: 1200.00 KZT.
+Missing required lookup:
+Rejected [GameNotFound]: Game 999 was not found in the catalog.
+Invalid quantity:
+Rejected [InvalidQuantity]: Quantity 0 must be positive.
+Insufficient stock:
+Rejected [InsufficientStock]: Game 2: requested 4, available 3.
+Budget rejection (retained factory rule):
+Rejected [ValidationRejected]: Total price exceeds budget.
+Unknown tariff:
+Rejected [UnknownTariff]: Tariff 'vip' is unsupported; use standard or student.
+Invalid state:
+Rejected [InvalidState]: Prepare the rental before confirmation.
+Present primitive zero:
+Free Chess at zero budget:
+Confirmed: Chess; days: 3; quantity: 1; tariff: student; total: 0.00 KZT.
+Missing file:
+Rejected [FileMissing]: Load '/var/folders/vk/n6bd816s245dswgkpdc7hk5h0000gn/T/BoardGameRentalDemo-a2510d01-f74b-4df7-902d-aba945d5ae96/absent.json': Could not find file '/var/folders/vk/n6bd816s245dswgkpdc7hk5h0000gn/T/BoardGameRentalDemo-a2510d01-f74b-4df7-902d-aba945d5ae96/absent.json'.
+Malformed JSON:
+Rejected [MalformedJson]: Parse '/var/folders/vk/n6bd816s245dswgkpdc7hk5h0000gn/T/BoardGameRentalDemo-a2510d01-f74b-4df7-902d-aba945d5ae96/malformed.json': Expected start of a property name or value, but instead reached end of data. Path: $[1] | LineNumber: 0 | BytePositionInLine: 9.
+
+Exit: 0
+
+$ dotnet run --project src/BoardGameRental.App --no-build -- --book7 sample-data/games.json 2 3 1 3000 student
+BoardGameRental - Assignments 5, 6 and 7
+Confirmed: Uno; days: 3; quantity: 1; tariff: student; total: 1200.00 KZT.
+
+Exit: 0
+
+$ dotnet run --project src/BoardGameRental.App --no-build -- --book7 sample-data/games.json 999 3 1 3000 student
+BoardGameRental - Assignments 5, 6 and 7
+Rejected [GameNotFound]: Game 999 was not found in the catalog.
+
+Exit: 1
+
+$ dotnet run --project src/BoardGameRental.App --no-build -- --book7 sample-data/games.json 2 3 0 3000 student
+BoardGameRental - Assignments 5, 6 and 7
+Rejected [InvalidQuantity]: Quantity 0 must be positive.
+
+Exit: 1
+
+$ dotnet run --project src/BoardGameRental.App --no-build -- --book7 sample-data/games.json 2 3 4 3000 student
+BoardGameRental - Assignments 5, 6 and 7
+Rejected [InsufficientStock]: Game 2: requested 4, available 3.
+
+Exit: 1
+
+$ dotnet run --project src/BoardGameRental.App --no-build -- --book7 sample-data/games.json 2 3 1 100 student
+BoardGameRental - Assignments 5, 6 and 7
+Rejected [ValidationRejected]: Total price exceeds budget.
+
+Exit: 1
+
+$ dotnet run --project src/BoardGameRental.App --no-build -- --book7 sample-data/games.json 2 3 1 3000 vip
+BoardGameRental - Assignments 5, 6 and 7
+Rejected [UnknownTariff]: Tariff 'vip' is unsupported; use standard or student.
+
+Exit: 1
+
+$ dotnet run --project src/BoardGameRental.App --no-build -- --book7 sample-data/malformed.json 2 3 1 3000 student
+BoardGameRental - Assignments 5, 6 and 7
+Rejected [MalformedJson]: Parse 'sample-data/malformed.json': Expected depth to be zero at the end of the JSON payload. There is an open JSON object or array that should be closed. Path: $[0] | LineNumber: 1 | BytePositionInLine: 0.
+
+Exit: 1
+
+$ dotnet run --project src/BoardGameRental.App --no-build -- --book7 sample-data/games.json 4 3 1 0 student
+BoardGameRental - Assignments 5, 6 and 7
+Confirmed: Chess; days: 3; quantity: 1; tariff: student; total: 0.00 KZT.
 
 Exit: 0

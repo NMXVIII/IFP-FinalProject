@@ -7,7 +7,11 @@ internal static class Program
 {
     private static int Main(string[] args)
     {
-        Console.WriteLine("BoardGameRental - Assignments 5 and 6");
+        Console.WriteLine("BoardGameRental - Assignments 5, 6 and 7");
+        if (args.Length > 0 && args[0] == "--book7")
+            return ExceptionConsole.Run(args);
+        if (args.Length == 1 && args[0] == "--demo7")
+            return ExceptionConsole.Demo(Path.Combine(AppContext.BaseDirectory, "sample-data"));
         if (args.Length > 0 && args[0] == "--book")
             return BookingConsole.Run(args);
         if (args.Length == 1 && args[0] == "--demo")
@@ -16,6 +20,7 @@ internal static class Program
         {
             Console.WriteLine("Default: run both policies on games.json for 3 days with a 3000 KZT budget.");
             Console.WriteLine("Custom: dotnet run --project src/BoardGameRental.App -- <file> <days> <budget> <both|standard|student>");
+            Console.WriteLine("Assignment 7: --demo7 or --book7 <file> <gameId> <days> <quantity> <budget> <standard|student>");
             Console.WriteLine("Assignment 6 demo: --demo");
             Console.WriteLine("Booking: --book <file> <gameId> <days> <quantity> <budget> <standard|student>");
             return 0;

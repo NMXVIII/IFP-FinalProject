@@ -1,176 +1,175 @@
-# BoardGameRental — Assignments 5, 6 и 7
+# BoardGameRental — Assignments 5, 6 and 7
 
-Аренда настольных игр: подбор доступных игр по бюджету и безопасное подтверждение аренды.
-Пользователи: клиент и сотрудник проката. Данные берутся из JSON-каталога.
-Подтверждение работает с неизменяемым снимком: проект не списывает остатки и не выполняет оплату.
+A board-game rental application. A customer or clerk chooses a catalog game, a number
+of days, a quantity, a budget and a tariff. The program finds the game, validates the
+request, prices it and safely confirms the rental, or explains exactly why it cannot.
+The catalog is read from a JSON file. The confirmation works on an immutable snapshot:
+the project does not reduce stock and does not take payment.
 
-**Этап 3/4: Kurmashev Damir — Переходы состояний и композиция.**
-Включены все предыдущие этапы. Полный консольный сценарий Assignment 7 появляется на этапе 4.
-Функциональность и все 34 теста Assignments 5–6 сохранены в проекте.
+Assignment 7 adds explicit failure handling: `Result<T>`, `Option<T>`, `Map`, `Bind` and
+a single boundary where file and JSON exceptions are converted into outcomes. The
+Assignment 5 pipeline and the Assignment 6 safe state transitions are still active.
 
-## Установка и проверка
+## Build, run and test
 
-Нужен **.NET 8 SDK**; проверено с **8.0.425**, Windows, **2026-10-25**.
-Внешние NuGet-пакеты не нужны. Команды выполняются из папки с `BoardGameRental.sln`.
+Prerequisite: .NET 8 SDK (`dotnet --version` must start with `8.`). SDK used: 8.0.425
+on macOS (Apple Silicon). `global.json` requires an 8.0.x SDK; SDK 10 alone is not enough.
+No external NuGet packages. Windows, Linux or macOS.
 
-```powershell
+Working directory for every command: the extracted project folder, the one that
+contains `BoardGameRental.sln`.
+
+```sh
 dotnet build BoardGameRental.sln
 dotnet run --project tests/BoardGameRental.Tests
+dotnet run --project src/BoardGameRental.App -- --demo7
 ```
 
-Ожидаемый результат этапа: **51/51 passed; 0 failed**.
-Проверен общий проект с изменениями этапа 3: сборка без предупреждений и ошибок.
-Точные команды и результаты проверки: `docs/TEST_RESULTS.txt`.
-Тесты используют консольный runner с утверждениями: запускайте через `dotnet run`, а не `dotnet test`.
-Код выхода тестов: 0 при успехе, 1 при любой ошибке.
+Expected result of the tests: `55/55 passed; 0 failed.` (exit code 0, 1 on any failure).
+The tests use a console assertion runner, so run them with `dotnet run`, not `dotnet test`.
+Latest verification: 2026-10-25, .NET SDK 8.0.425 on macOS (Apple Silicon), from a clean
+extraction of the submitted archive: build with 0 warnings and 0 errors, 55/55 tests.
+Full output: `docs/TEST_RESULTS.txt`.
+On Windows, `run.bat`, `test.bat` and `demo7.bat` run the same commands.
 
-В Windows можно запустить `test.bat` и `run.bat`. В VS Code открывайте всю папку проекта;
-кнопка ▶ для `.bat` использует **PowerShell**. Перед командой стоит безопасный разделитель `;`,
-чтобы потеря первого символа при отправке команды не превращала `cmd.exe` в `md.exe`.
+## Commands
 
-## Команда и распределение задач
+| Command | Meaning |
+|---|---|
+| `--demo7` | Assignment 7 demonstration: success, every failure and both file failures |
+| `--book7 <file> <gameId> <days> <quantity> <budget> <standard\|student>` | One booking through the Result chain. Exit code 0 on success, 1 on a rejection |
+| `--demo`, `--book ...` | Assignment 6 demonstration and booking (unchanged) |
+| no arguments, or `<file> <days> <budget> <both\|standard\|student>` | Assignment 5 recommendations (unchanged) |
+| `--help` | List of modes |
 
-| Порядок | Участник | Группа | Задача Assignment 7 | Основные файлы и тесты | Статус на этапе 3 |
-|---|---|---|---|---|---|---|
-| 1 | Issen Daiana | IT-2511 | Success/Failure, Map, Bind, Match; ошибки количества, остатка, отсутствующей игры; повторное использование фабрики задания 6 | `Result.cs; ValidatedRentalOutcomes.cs`; `ResultFactoryTests.cs` | Включён |
-| 2 | Kabdrakhmanova Zarina | IT-2511 | Some/None; поиск игры и цены; преобразование None в Result; проверка названия тарифа | `Option.cs; RentalTariffOutcomes.cs`; `OptionTariffTests.cs` | Включён |
-| 3 | Kurmashev Damir | IT-2511 | Цепочка поиска, подготовки и подтверждения; Map/Bind; ошибки порядка операций; повторное подтверждение | `RentalOutcomes.cs`; `ResultWorkflowTests.cs` | Включён |
-| 4 | Nurlanbek Marghulan | IT-2511 | JSON и файловые ошибки; консольные команды; один обработчик результата; соединение всех модулей | `CatalogBoundary.cs; ExceptionConsole.cs; Program.cs; demo7.bat`; `BoundaryOutcomeTests.cs` | Следующий этап |
+Numbers use a dot as the decimal separator. Input data: `sample-data/games.json`
+(6 games), `sample-data/malformed.json`, `sample-data/invalid.json`,
+`sample-data/empty.json` (`[]`) and `sample-data/missing-catalog.json`.
 
-Все основные файлы находятся в `src/BoardGameRental.Core/`, тесты —
-в `tests/BoardGameRental.Tests/`. Консольные файлы четвёртого этапа находятся в
-`src/BoardGameRental.App/`. Каждый участник отвечает также за объяснение своего модуля,
-своих тестов и соответствующего раздела документации.
+## Domain rules
 
-## Сохранённый Assignment 5
+- Catalog record: positive unique ID; non-empty name and category; daily price 0 to
+  1,000,000 with at most two decimals; available copies at least 0.
+- A price of 0 and a stock of 0 are legitimate values and mean different things:
+  a free game is bookable, a game with no copies is not.
+- Request: game must exist; days 1 to 30; quantity greater than 0 and not above the
+  available copies; budget 0 to 1,000,000,000 with at most two decimals; tariff
+  `standard` or `student`; the total price must not exceed the budget.
+- Student tariff gives a 20% discount. The price of one copy is rounded to two decimals
+  (away from zero at the midpoint) and then multiplied by the quantity.
+- A duplicate ID or any invalid record rejects the whole catalog. No partial catalog exists.
 
-```powershell
-dotnet run --project src/BoardGameRental.App
-dotnet run --project src/BoardGameRental.App -- sample-data/games.json 3 3000 both
-```
+## Outcome model
 
-В `games.json` шесть записей. Для 3 дней и бюджета 3000 KZT:
-Standard даёт ID 4, 2, 1 с ценами 0, 1500, 3000; Student — 4, 2, 1, 6 с ценами
-0, 1200, 2400, 3000. ID 5 без остатка отсекается. ID 4 бесплатный, это допустимое значение.
-Каждая рекомендация проверяется на бюджет отдельно. Некорректный каталог отклоняется
-целиком до расчётов; `[]` является корректным пустым набором.
+`Result<T>` has exactly two cases. `Success` carries a non-null value. `Failure` carries
+an `AppError(Code, Message)`. The value exists only in `Success` and the error only in
+`Failure`, so a failure can never be read as if it had a value.
+`Option<T>` has `Some(value)` and `None`. `None` becomes a failure only where the workflow
+requires the item (`ToResult`). Zero, `false` and an empty string are `Some`, not absence.
 
-| Чистый этап | Вход -> выход | Правило и пример |
+`RentalState` (Draft, Ready, Confirmed) says where a rental is in its life cycle.
+`Result` says whether one operation succeeded or why it was rejected. A validation
+failure is not a new rental state: a failed `Prepare` leaves the Draft exactly as it was.
+
+| Case | Success | Failure (code: context) |
 |---|---|---|
-| SelectAvailableGames | игры -> доступные игры | Остаток > 0; Risk с остатком 0 исключается |
-| CalculateQuotes | игры, дни, функция цены -> предложения | Вызывает переданный делегат: Uno за 3 дня = 1500 Standard либо 1200 Student |
-| BuildRecommendations | предложения, бюджет -> упорядоченные рекомендации | Цена <= бюджета; сортировка по цене, затем ID; Carcassonne при 3000 проходит только по Student |
+| Find a required game | the found game | `GameNotFound`: the missing ID |
+| Quantity | positive quantity | `InvalidQuantity`: the rejected quantity |
+| Stock | quantity within stock | `InsufficientStock`: game ID, requested and available |
+| Other factory rules (days, budget, tariff) | `ValidatedRental` with the calculated price | `ValidationRejected`: the broken rule |
+| Tariff name | normalized tariff | `UnknownTariff`: the given name, allowed values |
+| Prepare, Confirm | Draft -> Ready -> Confirmed | `InvalidState`: current state and missing prerequisite |
+| Load catalog | fully validated read-only catalog | `FileMissing`, `MalformedJson`, `InvalidCatalog`, `AccessDenied`, `FileReadFailed`, `InvalidPath`: operation and path |
 
-`RentalPipeline.Run` соединяет все три этапа. Политика выбирается за пределами чистого
-ядра и передаётся аргументом. Этапы не меняют исходные коллекции, не читают Console/файлы
-и не зависят от скрытых настроек. Исходная документация и тесты: `docs/assignment5/`.
+Expected business failures are returned, never thrown. Only file and JSON exceptions are
+caught, in one place (`CatalogBoundary.Load`). There is no fallback and no data is written.
 
-## Сохранённый Assignment 6
-
-```powershell
-dotnet run --project src/BoardGameRental.App -- --demo
-dotnet run --project src/BoardGameRental.App -- --book sample-data/games.json 2 3 1 3000 student
-```
-
-Uno подтверждается за 1200.00 KZT. `ValidatedRental` имеет приватный конструктор,
-а `TryCreate` проверяет все правила до создания значения.
-Состояния закрыты: Draft содержит исходный запрос, Ready и Confirmed — ValidatedRental.
-Prepare принимает Draft; повтор Prepare отклоняется. Confirm требует Ready;
-повтор Confirm для Confirmed возвращает тот же объект. Неуспешные старые операции
-возвращают исходное состояние без изменения. Пример скрытой зависимости до исправления,
-безопасный вызов и таблица переходов сохранены в `docs/assignment6/README.md`.
-
-## Модель Assignment 7
-
-Эта секция описывает общий итог четырёх этапов; таблица команды выше показывает,
-какие модули уже включены в проект на этапе 3.
-
-`Result<T>` содержит только Success с непустым обязательным payload либо Failure с AppError.
-Ошибка несёт Code и Message. Value доступен лишь в Success, Error — лишь в Failure.
-`Option<T>` содержит Some(value) или None. Реальный поиск игры — `CatalogLookup.Find`.
-Отсутствующий обязательный результат превращается через ToResult в GameNotFound.
-Поиск цены возвращает Some(0) для бесплатной игры и None для отсутствующей.
-Значения 0, false и пустая строка сами по себе не означают отсутствие.
-
-`RentalState` обозначает этап аренды; `Result` — успех или отказ одной операции.
-Ошибка валидации не является новым состоянием аренды. Старый WorkflowResult сохранён
-для совместимости задания 6. Новая подготовка вызывает `ValidatedRentalOutcomes.Create`
-и лишь после успеха создаёт Ready. Создание ValidatedRental по-прежнему защищено фабрикой.
-
-Правила: существующая игра; положительный ID; непустые имя/категория; цена 0..1 000 000
-с максимум двумя десятичными знаками; остаток >=0; дни 1..30; количество >0 и <= остатка;
-бюджет 0..1 000 000 000 с максимум двумя знаками; тариф Standard/Student; итог <= бюджета.
-Дубликаты ID отклоняются при загрузке. Student округляет стоимость одной копии до двух
-знаков от нуля на середине, затем умножает на количество. Точные границы принимаются.
-
-| Операция / правило | Успешный результат | Ошибка и её контекст |
-|---|---|---|
-| Найти обязательную игру | Найденная игра | GameNotFound: отсутствующий ID |
-| Проверить количество | Положительное количество | InvalidQuantity: исходное количество |
-| Проверить остаток | Количество не больше остатка | InsufficientStock: ID, запрошенное и доступное количество |
-| Проверить прочие правила фабрики | ValidatedRental с рассчитанной ценой | ValidationRejected: причина, например превышение бюджета |
-| Найти тариф | Существующий нормализованный тариф | UnknownTariff: исходное название; допустимы standard/student |
-| Подготовить / подтвердить | Draft -> Ready -> Confirmed | InvalidState: текущее состояние и нужная предпосылка |
-| Загрузить JSON | Полностью проверенный read-only каталог | FileMissing, MalformedJson, InvalidCatalog, AccessDenied, FileReadFailed, InvalidPath: операция и путь |
-
-Ожидаемые предметные отказы возвращаются без throw/catch. Исключения неправильного
-использования программного API (например, попытка создать Success с null) не маскируются
-под бизнес-успех. Обработка файловых и JSON-исключений находится в CatalogBoundary.Load,
-за пределами чистых функций. Возвращается либо весь корректный каталог, либо ошибка;
-частичный каталог не публикуется. Скрытого fallback нет, файлы никогда не перезаписываются.
-
-Цепочка `RentalOutcomes.Book`:
+The booking chain (`RentalOutcomes.Book`):
 
 ```text
-Find -> ToResult -> Map(Draft) -> Bind(Prepare) -> Bind(Confirm) -> Map(строка результата)
+Find -> ToResult -> Map(create Draft) -> Bind(Prepare) -> Bind(Confirm) -> Map(text)
 ```
 
-Map принимает `T -> U` и оборачивает новое значение в Result. Bind принимает
-`T -> Result<U>` и возвращает Result следующей операции без дополнительного вложения.
-Оба метода при Failure сохраняют ошибку и не вызывают переданную функцию.
-Итоговая консольная цепочка: Load -> Bind(Parse tariff -> Bind(Book)) -> один Print/Match.
+`Map` takes `T -> U` and wraps the new value itself. `Bind` takes `T -> Result<U>` and
+returns the next operation's own Result, so no `Result<Result<U>>` appears. On a failure
+both keep the error and do not call the supplied function. The console chain is
+`Load -> Bind(Parse tariff -> Bind(Book))`, handled once in `ExceptionConsole.Print`.
 
-## Карта требований Assignment 7
+## Requirement map
 
-| Требование | Этап / реализация | Проверки |
+| Requirement | Files and methods | Tests |
 |---|---|---|
-| Task 1: явные предметные исходы | 1: Result; ValidatedRentalOutcomes.Create; 3: RentalOutcomes | A7ValidatedFactorySuccess/Failures; A7BookingDomainFailures |
-| Task 2: отсутствующие значения | 2: Option; CatalogLookup; RentalTariffOutcomes | A7LookupPresentAbsent; A7PrimitiveValuesPresent; A7MissingBecomesFailure |
-| Task 3: Map и Bind в реальной цепочке | 1: Result.Map/Bind; 3: RentalOutcomes.Book; 4: ExceptionConsole.Run | A7MapSuccess; A7BindSuccess; A7CompleteBookingChain |
-| Пропуск зависимых функций | 1 и 3: передача Failure | A7FailureSkipsFunctions; A7MissingLookupSkipsPreparation — счётчик равен 0 |
-| Task 4: файловая граница | 4: CatalogBoundary.Load | A7MissingFilePreservesState; A7MalformedFilePreservesState; A7InvalidCatalogAndEmptyFile |
-| Task 5: интеграция и сохранение 5–6 | 4: ExceptionConsole.Run/Demo; старые команды | A7CompleteFileToBookingChain; все 34 старых теста; --demo7 |
-| Устойчивые переходы и нулевая цена | 3: Prepare/Confirm | A7StatesAndRepeatedConfirmation; A7BookingPreservesInput; A7FreeBooking |
+| Task 1: explicit outcomes, 3+ domain failures | `Result.cs`; `ValidatedRentalOutcomes.Create`; `RentalOutcomes` | A7ValidatedFactorySuccess, A7ValidatedFactoryFailures, A7BookingDomainFailures, A7RejectsNullPayload |
+| Task 2: missing values | `Option.cs` (`CatalogLookup.Find`, `FindDailyPrice`, `ToResult`); `RentalTariffOutcomes.Parse` | A7LookupPresentAbsent, A7PrimitiveValuesPresent, A7MissingBecomesFailure, A7TariffLookupSuccess/Failure |
+| Task 3: Map and Bind in a real chain | `Result.Map/Bind/Match`; `RentalOutcomes.Book`; `ExceptionConsole.Run` | A7MapSuccess, A7BindSuccess, A7CompleteBookingChain |
+| Dependent functions skipped after failure | `Result.Map/Bind` | A7FailureSkipsFunctions, A7MissingLookupSkipsPreparation (call counter is 0) |
+| Task 4: exception boundary | `CatalogBoundary.Load` | A7MissingFilePreservesState, A7MalformedFilePreservesState, A7InvalidCatalogAndEmptyFile |
+| Task 5: integration, earlier stages kept | `ExceptionConsole.Run/Demo`; `Program.Main` routes; old commands | A7CompleteFileToBookingChain; all 34 earlier tests; `--demo7` |
+| Safe transitions, zero price | `RentalOutcomes.Prepare/Confirm` | A7StatesAndRepeatedConfirmation, A7BookingPreservesInput, A7FreeBooking |
 
-## Тесты текущего этапа
+## Demonstrations (`--demo7` shows all of them)
 
-34 теста прежних заданий плюс 17 новых. Каждый тест использует проверки значений,
-при несовпадении завершается ошибкой. Полный фактический список: `docs/TEST_RESULTS.txt`.
-В новых файловых тестах используются уникальные временные папки с очисткой в finally;
-входные fixtures находятся в `sample-data/`.
+```sh
+dotnet run --project src/BoardGameRental.App -- --book7 sample-data/games.json 2 3 1 3000 student   # success: Uno 1200.00 KZT
+dotnet run --project src/BoardGameRental.App -- --book7 sample-data/games.json 999 3 1 3000 student # GameNotFound (missing lookup)
+dotnet run --project src/BoardGameRental.App -- --book7 sample-data/games.json 2 3 0 3000 student   # InvalidQuantity
+dotnet run --project src/BoardGameRental.App -- --book7 sample-data/games.json 2 3 4 3000 student   # InsufficientStock
+dotnet run --project src/BoardGameRental.App -- --book7 sample-data/games.json 2 3 1 100 student    # ValidationRejected: budget
+dotnet run --project src/BoardGameRental.App -- --book7 sample-data/games.json 2 3 1 3000 vip       # UnknownTariff
+dotnet run --project src/BoardGameRental.App -- --book7 sample-data/games.json 4 3 1 0 student      # free game, zero budget: accepted
+dotnet run --project src/BoardGameRental.App -- --book7 sample-data/malformed.json 2 3 1 3000 student # MalformedJson
+```
 
-| Участник | Тест | Ожидаемая проверка |
+`--demo7` also shows `InvalidState` and a missing file (in a temporary folder created and
+removed by the demo, so it never depends on the laptop). Rejections inside the finished
+demonstration are expected, so `--demo7` exits with 0. A single `--book7` exits with 1 on
+any rejection. Wrong arguments print an explanation and exit with 1.
+Expected output: `docs/EXPECTED_OUTPUT.txt`.
+
+## Tests
+
+55 cumulative tests: 34 from Assignments 5 and 6 plus 21 new. Every test compares actual
+and expected values and fails on a mismatch. File tests use unique temporary folders that are
+removed in `finally`; fixtures are in `sample-data/`.
+
+| Member | Test | Expected result |
 |---|---|---|
-| Issen Daiana | A7MapSuccess | 7 передаётся в Map, результат 21 |
-| Issen Daiana | A7BindSuccess | Bind получает 7 и возвращает тот же Result следующей операции |
-| Issen Daiana | A7FailureSkipsFunctions | После Failure счётчик Map/Bind равен 0, объект ошибки сохранён |
-| Issen Daiana | A7RejectsNullPayload | Success с null не создаётся |
-| Issen Daiana | A7ValidatedFactorySuccess | Uno: 3 дня, 1 копия, student => 1200 KZT; вход не изменён |
-| Issen Daiana | A7ValidatedFactoryFailures | GameNotFound, InvalidQuantity, InsufficientStock, ValidationRejected; правила дней, бюджета и тарифа действуют |
-| Kabdrakhmanova Zarina | A7LookupPresentAbsent | Uno находится, ID 999 возвращает None |
-| Kabdrakhmanova Zarina | A7PrimitiveValuesPresent | Цена 0, false и пустая строка являются присутствующими значениями |
-| Kabdrakhmanova Zarina | A7MissingBecomesFailure | None становится GameNotFound, Some становится Success |
-| Kabdrakhmanova Zarina | A7TariffLookupSuccess | STANDARD с пробелами и Student нормализуются; цена student 1200 |
-| Kabdrakhmanova Zarina | A7TariffLookupFailure | null, пустая строка, both и vip дают UnknownTariff |
-| Kurmashev Damir | A7CompleteBookingChain | Полная цепочка возвращает точную строку подтверждения Uno за 1200.00 KZT |
-| Kurmashev Damir | A7BookingDomainFailures | Четыре предметные ошибки сохраняют полезные коды |
-| Kurmashev Damir | A7StatesAndRepeatedConfirmation | Draft нельзя подтвердить; Ready/Confirmed нельзя подготовить; повтор Confirm идемпотентен |
-| Kurmashev Damir | A7MissingLookupSkipsPreparation | После отсутствующего поиска создание Draft, Prepare и Confirm не вызываются |
-| Kurmashev Damir | A7BookingPreservesInput | Неуспешная операция оставляет Draft и каталог неизменными |
-| Kurmashev Damir | A7FreeBooking | Chess с ценой 0 проходит при бюджете 0 |
+| Issen Daiana | A7MapSuccess | 7 reaches Map and the result is 21 |
+| Issen Daiana | A7BindSuccess | Bind receives 7 and returns the next Result itself |
+| Issen Daiana | A7FailureSkipsFunctions | After a failure the Map/Bind counter is 0 and the same error object is kept |
+| Issen Daiana | A7RejectsNullPayload | A Success with a null payload cannot be created |
+| Issen Daiana | A7ValidatedFactorySuccess | Uno, 3 days, 1 copy, student: 1200 KZT; input unchanged |
+| Issen Daiana | A7ValidatedFactoryFailures | GameNotFound, InvalidQuantity, InsufficientStock, ValidationRejected |
+| Kabdrakhmanova Zarina | A7LookupPresentAbsent | Uno is found; ID 999 gives None |
+| Kabdrakhmanova Zarina | A7PrimitiveValuesPresent | Price 0, `false` and an empty string are present values |
+| Kabdrakhmanova Zarina | A7MissingBecomesFailure | None becomes GameNotFound; Some becomes Success |
+| Kabdrakhmanova Zarina | A7TariffLookupSuccess | " STANDARD " and "Student" are normalized; student price 1200 |
+| Kabdrakhmanova Zarina | A7TariffLookupFailure | null, "", "both" and "vip" give UnknownTariff |
+| Kurmashev Damir | A7CompleteBookingChain | Exact confirmation text for Uno, 1200.00 KZT |
+| Kurmashev Damir | A7BookingDomainFailures | GameNotFound, InvalidQuantity, InsufficientStock, ValidationRejected |
+| Kurmashev Damir | A7StatesAndRepeatedConfirmation | Draft cannot be confirmed; Ready/Confirmed cannot be prepared; repeated Confirm returns the same object |
+| Kurmashev Damir | A7MissingLookupSkipsPreparation | After a missing game, Draft creation, Prepare and Confirm are not called |
+| Kurmashev Damir | A7BookingPreservesInput | A failed operation leaves the Draft and the catalog unchanged |
+| Kurmashev Damir | A7FreeBooking | Chess at price 0 is accepted with budget 0 |
+| Nurlanbek Marghulan | A7MissingFilePreservesState | FileMissing contains the path, creates no file, skips preparation, keeps the Draft |
+| Nurlanbek Marghulan | A7MalformedFilePreservesState | Bad syntax and a wrong value type give MalformedJson; file and state unchanged |
+| Nurlanbek Marghulan | A7InvalidCatalogAndEmptyFile | A catalog with one bad record is rejected whole; `[]` is accepted |
+| Nurlanbek Marghulan | A7CompleteFileToBookingChain | File -> tariff -> booking gives 1200.00; "vip" stops the chain; file unchanged |
 
-## Состояние разработки
+## Team
 
-Приложения заданий 5–6 работают как раньше. Новые модули текущего этапа
-проверяются автоматическими тестами. Команды `--demo7` и `--book7`, файловая граница
-и полный показ ошибок добавляются четвёртым участником в архиве 04.
+| Member | Group | Assignment 7 logic | Tests | Documentation |
+|---|---|---|---|---|
+| Issen Daiana | IT-2511 | `Result.cs` (Success, Failure, Map, Bind, Match); `ValidatedRentalOutcomes.cs` reusing the Assignment 6 factory | `ResultFactoryTests.cs` | Outcome model and failure table |
+| Kabdrakhmanova Zarina | IT-2511 | `Option.cs` (Some, None, `CatalogLookup`); `RentalTariffOutcomes.cs` | `OptionTariffTests.cs` | Missing-value rules |
+| Kurmashev Damir | IT-2511 | `RentalOutcomes.cs`: find, prepare, confirm chain with Map and Bind | `ResultWorkflowTests.cs` | Transitions and the booking chain |
+| Nurlanbek Marghulan | IT-2511 | `CatalogBoundary.cs` (file and JSON boundary); `ExceptionConsole.cs` and `Program.cs` routes; one final outcome handler | `BoundaryOutcomeTests.cs` | Commands, requirement map, expected results, verification |
+
+Each member can explain and defend their own part. AI assistance (Claude) was used while
+preparing this stage; each member reviewed and can explain their own code.
+
+## Earlier stages
+
+Earlier stages are kept in `docs/assignment5/` and `docs/assignment6/` (README, expected
+output and test results). Assignment 5 is the three-stage pure pipeline; Assignment 6 is the
+`ValidatedRental` factory and the Draft, Ready, Confirmed states.

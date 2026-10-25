@@ -58,7 +58,11 @@ internal static partial class Program
             ("A7StatesAndRepeatedConfirmation", A7StatesAndRepeatedConfirmation),
             ("A7MissingLookupSkipsPreparation", A7MissingLookupSkipsPreparation),
             ("A7BookingPreservesInput", A7BookingPreservesInput),
-            ("A7FreeBooking", A7FreeBooking)
+            ("A7FreeBooking", A7FreeBooking),
+            ("A7MissingFilePreservesState", A7MissingFilePreservesState),
+            ("A7MalformedFilePreservesState", A7MalformedFilePreservesState),
+            ("A7InvalidCatalogAndEmptyFile", A7InvalidCatalogAndEmptyFile),
+            ("A7CompleteFileToBookingChain", A7CompleteFileToBookingChain)
         };
 
         int failures = 0;

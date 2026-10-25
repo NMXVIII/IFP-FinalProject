@@ -1,17 +1,6 @@
-Verified 2026-10-25, Windows, .NET SDK 8.0.425.
-Base repository revision: 5879cdf255c7bce8d198615a77f4caf8d7591462.
-Clean repository snapshot with the Damir stage 3 changes applied.
-Working directory: repository root containing BoardGameRental.sln.
+Test run: Sun Oct 25 16:12:47 +05 2026
+.NET SDK: 8.0.425, macOS
 
-$ dotnet build BoardGameRental.sln --nologo -m:1 -p:UseSharedCompilation=false -nr:false --disable-build-servers
-
-Build succeeded.
-    0 Warning(s)
-    0 Error(s)
-
-Time Elapsed 00:00:07.80
-
-$ dotnet run --project tests/BoardGameRental.Tests --no-build
 PASS: Normal composed workflow
 PASS: Both policies change the documented result
 PASS: Valid empty dataset
@@ -63,7 +52,9 @@ PASS: A7StatesAndRepeatedConfirmation
 PASS: A7MissingLookupSkipsPreparation
 PASS: A7BookingPreservesInput
 PASS: A7FreeBooking
+PASS: A7MissingFilePreservesState
+PASS: A7MalformedFilePreservesState
+PASS: A7InvalidCatalogAndEmptyFile
+PASS: A7CompleteFileToBookingChain
 
-51/51 passed; 0 failed.
-
-Exit: 0
+55/55 passed; 0 failed.
