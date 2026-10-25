@@ -165,8 +165,7 @@ removed in `finally`; fixtures are in `sample-data/`.
 | Kurmashev Damir | IT-2511 | `RentalOutcomes.cs`: find, prepare, confirm chain with Map and Bind | `ResultWorkflowTests.cs` | Transitions and the booking chain |
 | Nurlanbek Marghulan | IT-2511 | `CatalogBoundary.cs` (file and JSON boundary); `ExceptionConsole.cs` and `Program.cs` routes; one final outcome handler | `BoundaryOutcomeTests.cs` | Commands, requirement map, expected results, verification |
 
-Each member can explain and defend their own part. AI assistance (Claude) was used while
-preparing this stage; each member reviewed and can explain their own code.
+Each member can explain and defend their own part.
 
 ## Earlier stages
 
