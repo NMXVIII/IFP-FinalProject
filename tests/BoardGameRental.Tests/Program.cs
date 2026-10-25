@@ -52,7 +52,13 @@ internal static partial class Program
             ("A7PrimitiveValuesPresent", A7PrimitiveValuesPresent),
             ("A7MissingBecomesFailure", A7MissingBecomesFailure),
             ("A7TariffLookupSuccess", A7TariffLookupSuccess),
-            ("A7TariffLookupFailure", A7TariffLookupFailure)
+            ("A7TariffLookupFailure", A7TariffLookupFailure),
+            ("A7CompleteBookingChain", A7CompleteBookingChain),
+            ("A7BookingDomainFailures", A7BookingDomainFailures),
+            ("A7StatesAndRepeatedConfirmation", A7StatesAndRepeatedConfirmation),
+            ("A7MissingLookupSkipsPreparation", A7MissingLookupSkipsPreparation),
+            ("A7BookingPreservesInput", A7BookingPreservesInput),
+            ("A7FreeBooking", A7FreeBooking)
         };
 
         int failures = 0;

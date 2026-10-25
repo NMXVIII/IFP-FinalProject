@@ -1,4 +1,6 @@
-Actual clean-extraction runs, stage 2/4, 2026-10-22. Local paths normalized.
+Actual Assignment 5/6 command output after applying stage 3, 2026-10-25.
+The Assignment 7 Result chain is checked by A7CompleteBookingChain and the other workflow tests.
+The Assignment 7 console commands are added in stage 4.
 
 $ dotnet run --project src/BoardGameRental.App --no-build
 BoardGameRental - Assignments 5 and 6
@@ -29,11 +31,5 @@ Insufficient stock:
 Rejected: Quantity exceeds available copies. State: Draft.
 Insufficient budget:
 Rejected: Total price exceeds budget. State: Draft.
-
-Exit: 0
-
-$ dotnet run --project src/BoardGameRental.App --no-build -- --book sample-data/games.json 2 3 1 3000 student
-BoardGameRental - Assignments 5 and 6
-Confirmed: Uno; days: 3; quantity: 1; tariff: student; total: 1200.00 KZT.
 
 Exit: 0

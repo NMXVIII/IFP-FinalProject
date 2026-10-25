@@ -1,22 +1,16 @@
-Clean ZIP extraction, 2026-10-22, Windows, .NET SDK 8.0.425.
-Stage 2/4: Kabdrakhmanova Zarina.
+Verified 2026-10-25, Windows, .NET SDK 8.0.425.
+Base repository revision: 5879cdf255c7bce8d198615a77f4caf8d7591462.
+Clean repository snapshot with the Damir stage 3 changes applied.
+Working directory: repository root containing BoardGameRental.sln.
 
 $ dotnet build BoardGameRental.sln --nologo -m:1 -p:UseSharedCompilation=false -nr:false --disable-build-servers
-  Определение проектов для восстановления...
-  Восстановлен <project>\src\BoardGameRental.App\BoardGameRental.App.csproj (за 125 мс).
-  Восстановлен <project>\tests\BoardGameRental.Tests\BoardGameRental.Tests.csproj (за 125 мс).
-  Восстановлен <project>\src\BoardGameRental.Core\BoardGameRental.Core.csproj (за 110 мс).
-  BoardGameRental.Core -> <project>\src\BoardGameRental.Core\bin\Debug\net8.0\BoardGameRental.Core.dll
-  BoardGameRental.App -> <project>\src\BoardGameRental.App\bin\Debug\net8.0\BoardGameRental.App.dll
-  BoardGameRental.Tests -> <project>\tests\BoardGameRental.Tests\bin\Debug\net8.0\BoardGameRental.Tests.dll
 
-Сборка успешно завершена.
-    Предупреждений: 0
-    Ошибок: 0
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
 
-Прошло времени 00:00:10.11
+Time Elapsed 00:00:07.80
 
-Exit: 0
 $ dotnet run --project tests/BoardGameRental.Tests --no-build
 PASS: Normal composed workflow
 PASS: Both policies change the documented result
@@ -63,7 +57,13 @@ PASS: A7PrimitiveValuesPresent
 PASS: A7MissingBecomesFailure
 PASS: A7TariffLookupSuccess
 PASS: A7TariffLookupFailure
+PASS: A7CompleteBookingChain
+PASS: A7BookingDomainFailures
+PASS: A7StatesAndRepeatedConfirmation
+PASS: A7MissingLookupSkipsPreparation
+PASS: A7BookingPreservesInput
+PASS: A7FreeBooking
 
-45/45 passed; 0 failed.
+51/51 passed; 0 failed.
 
 Exit: 0

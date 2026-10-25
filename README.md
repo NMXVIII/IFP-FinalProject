@@ -4,13 +4,13 @@
 Пользователи: клиент и сотрудник проката. Данные берутся из JSON-каталога.
 Подтверждение работает с неизменяемым снимком: проект не списывает остатки и не выполняет оплату.
 
-**Снимок 2/4: Kabdrakhmanova Zarina — Отсутствующие значения и тарифы.**
-Включены все предыдущие этапы. Полный консольный сценарий Assignment 7 появляется в снимке 04.
-Функциональность и все 34 теста Assignments 5–6 сохранены в каждом архиве.
+**Этап 3/4: Kurmashev Damir — Переходы состояний и композиция.**
+Включены все предыдущие этапы. Полный консольный сценарий Assignment 7 появляется на этапе 4.
+Функциональность и все 34 теста Assignments 5–6 сохранены в проекте.
 
 ## Установка и проверка
 
-Нужен **.NET 8 SDK**; проверено с **8.0.425**, Windows, **2026-10-22**.
+Нужен **.NET 8 SDK**; проверено с **8.0.425**, Windows, **2026-10-25**.
 Внешние NuGet-пакеты не нужны. Команды выполняются из папки с `BoardGameRental.sln`.
 
 ```powershell
@@ -18,8 +18,8 @@ dotnet build BoardGameRental.sln
 dotnet run --project tests/BoardGameRental.Tests
 ```
 
-Ожидаемый результат этого снимка: **45/45 passed; 0 failed**.
-Проверен архив после чистой распаковки: сборка без предупреждений и ошибок.
+Ожидаемый результат этапа: **51/51 passed; 0 failed**.
+Проверен общий проект с изменениями этапа 3: сборка без предупреждений и ошибок.
 Точные команды и результаты проверки: `docs/TEST_RESULTS.txt`.
 Тесты используют консольный runner с утверждениями: запускайте через `dotnet run`, а не `dotnet test`.
 Код выхода тестов: 0 при успехе, 1 при любой ошибке.
@@ -30,20 +30,17 @@ dotnet run --project tests/BoardGameRental.Tests
 
 ## Команда и распределение задач
 
-| Порядок | Участник | Группа | Задача Assignment 7 | Основные файлы и тесты | Статус в этом снимке |
+| Порядок | Участник | Группа | Задача Assignment 7 | Основные файлы и тесты | Статус на этапе 3 |
 |---|---|---|---|---|---|---|
 | 1 | Issen Daiana | IT-2511 | Success/Failure, Map, Bind, Match; ошибки количества, остатка, отсутствующей игры; повторное использование фабрики задания 6 | `Result.cs; ValidatedRentalOutcomes.cs`; `ResultFactoryTests.cs` | Включён |
 | 2 | Kabdrakhmanova Zarina | IT-2511 | Some/None; поиск игры и цены; преобразование None в Result; проверка названия тарифа | `Option.cs; RentalTariffOutcomes.cs`; `OptionTariffTests.cs` | Включён |
-| 3 | Kurmashev Damir | IT-2511 | Цепочка поиска, подготовки и подтверждения; Map/Bind; ошибки порядка операций; повторное подтверждение | `RentalOutcomes.cs`; `ResultWorkflowTests.cs` | Следующий этап |
+| 3 | Kurmashev Damir | IT-2511 | Цепочка поиска, подготовки и подтверждения; Map/Bind; ошибки порядка операций; повторное подтверждение | `RentalOutcomes.cs`; `ResultWorkflowTests.cs` | Включён |
 | 4 | Nurlanbek Marghulan | IT-2511 | JSON и файловые ошибки; консольные команды; один обработчик результата; соединение всех модулей | `CatalogBoundary.cs; ExceptionConsole.cs; Program.cs; demo7.bat`; `BoundaryOutcomeTests.cs` | Следующий этап |
 
 Все основные файлы находятся в `src/BoardGameRental.Core/`, тесты —
 в `tests/BoardGameRental.Tests/`. Консольные файлы четвёртого этапа находятся в
 `src/BoardGameRental.App/`. Каждый участник отвечает также за объяснение своего модуля,
 своих тестов и соответствующего раздела документации.
-
-Порядок копирования файлов, коммитов и передачи работы: **[GITHUB_STEPS_RU.md](GITHUB_STEPS_RU.md)**.
-Изменения именно этого этапа: **[docs/STAGE_CHANGES.md](docs/STAGE_CHANGES.md)**.
 
 ## Сохранённый Assignment 5
 
@@ -86,7 +83,7 @@ Prepare принимает Draft; повтор Prepare отклоняется. C
 ## Модель Assignment 7
 
 Эта секция описывает общий итог четырёх этапов; таблица команды выше показывает,
-какие модули уже включены в текущий архив.
+какие модули уже включены в проект на этапе 3.
 
 `Result<T>` содержит только Success с непустым обязательным payload либо Failure с AppError.
 Ошибка несёт Code и Message. Value доступен лишь в Success, Error — лишь в Failure.
@@ -145,9 +142,9 @@ Map принимает `T -> U` и оборачивает новое значе�
 | Task 5: интеграция и сохранение 5–6 | 4: ExceptionConsole.Run/Demo; старые команды | A7CompleteFileToBookingChain; все 34 старых теста; --demo7 |
 | Устойчивые переходы и нулевая цена | 3: Prepare/Confirm | A7StatesAndRepeatedConfirmation; A7BookingPreservesInput; A7FreeBooking |
 
-## Тесты текущего снимка
+## Тесты текущего этапа
 
-34 теста прежних заданий плюс 11 новых. Каждый тест использует проверки значений,
+34 теста прежних заданий плюс 17 новых. Каждый тест использует проверки значений,
 при несовпадении завершается ошибкой. Полный фактический список: `docs/TEST_RESULTS.txt`.
 В новых файловых тестах используются уникальные временные папки с очисткой в finally;
 входные fixtures находятся в `sample-data/`.
@@ -165,9 +162,15 @@ Map принимает `T -> U` и оборачивает новое значе�
 | Kabdrakhmanova Zarina | A7MissingBecomesFailure | None становится GameNotFound, Some становится Success |
 | Kabdrakhmanova Zarina | A7TariffLookupSuccess | STANDARD с пробелами и Student нормализуются; цена student 1200 |
 | Kabdrakhmanova Zarina | A7TariffLookupFailure | null, пустая строка, both и vip дают UnknownTariff |
+| Kurmashev Damir | A7CompleteBookingChain | Полная цепочка возвращает точную строку подтверждения Uno за 1200.00 KZT |
+| Kurmashev Damir | A7BookingDomainFailures | Четыре предметные ошибки сохраняют полезные коды |
+| Kurmashev Damir | A7StatesAndRepeatedConfirmation | Draft нельзя подтвердить; Ready/Confirmed нельзя подготовить; повтор Confirm идемпотентен |
+| Kurmashev Damir | A7MissingLookupSkipsPreparation | После отсутствующего поиска создание Draft, Prepare и Confirm не вызываются |
+| Kurmashev Damir | A7BookingPreservesInput | Неуспешная операция оставляет Draft и каталог неизменными |
+| Kurmashev Damir | A7FreeBooking | Chess с ценой 0 проходит при бюджете 0 |
 
 ## Состояние разработки
 
-В этом архиве приложения заданий 5–6 работают как раньше. Новые модули текущего этапа
+Приложения заданий 5–6 работают как раньше. Новые модули текущего этапа
 проверяются автоматическими тестами. Команды `--demo7` и `--book7`, файловая граница
 и полный показ ошибок добавляются четвёртым участником в архиве 04.
