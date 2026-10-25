@@ -213,6 +213,5 @@ extraction of the submitted ZIP. `dotnet build BoardGameRental.sln`: 0 warnings,
 
 These are the assigned ownership areas; each member must review, understand and
 adapt their code, run relevant tests, and explain their contribution personally.
-AI-assisted preparation must be disclosed/used according to the course syllabus.
 
 Earlier stages are kept in docs/assignment5/ (README, expected output and test results).
