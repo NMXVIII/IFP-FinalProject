@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardGameRental.Core", "src\BoardGameRental.Core\BoardGameRental.Core.csproj", "{A31828D5-5C7E-4805-A636-11E7D27B2F01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardGameRental.App", "src\BoardGameRental.App\BoardGameRental.App.csproj", "{A31828D5-5C7E-4805-A636-11E7D27B2F02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardGameRental.Tests", "tests\BoardGameRental.Tests\BoardGameRental.Tests.csproj", "{A31828D5-5C7E-4805-A636-11E7D27B2F03}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A31828D5-5C7E-4805-A636-11E7D27B2F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A31828D5-5C7E-4805-A636-11E7D27B2F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A31828D5-5C7E-4805-A636-11E7D27B2F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A31828D5-5C7E-4805-A636-11E7D27B2F01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A31828D5-5C7E-4805-A636-11E7D27B2F02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A31828D5-5C7E-4805-A636-11E7D27B2F02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A31828D5-5C7E-4805-A636-11E7D27B2F02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A31828D5-5C7E-4805-A636-11E7D27B2F02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A31828D5-5C7E-4805-A636-11E7D27B2F03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A31828D5-5C7E-4805-A636-11E7D27B2F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A31828D5-5C7E-4805-A636-11E7D27B2F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A31828D5-5C7E-4805-A636-11E7D27B2F03}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
