@@ -62,7 +62,15 @@ internal static partial class Program
             ("A7MissingFilePreservesState", A7MissingFilePreservesState),
             ("A7MalformedFilePreservesState", A7MalformedFilePreservesState),
             ("A7InvalidCatalogAndEmptyFile", A7InvalidCatalogAndEmptyFile),
-            ("A7CompleteFileToBookingChain", A7CompleteFileToBookingChain)
+            ("A7CompleteFileToBookingChain", A7CompleteFileToBookingChain),
+            ("A8StockExtension", A8StockExtension),
+            ("A8QuoteExtension", A8QuoteExtension),
+            ("A8AffordableNormal", A8AffordableNormal),
+            ("A8AffordableEmpty", A8AffordableEmpty),
+            ("A8AffordableNoMatches", A8AffordableNoMatches),
+            ("A8AffordableTies", A8AffordableTies),
+            ("A8DeferredTiming", A8DeferredTiming),
+            ("A8DeferredEarlyStop", A8DeferredEarlyStop)
         };
 
         int failures = 0;
