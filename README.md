@@ -1,6 +1,6 @@
 # BoardGameRental - Assignment 8 development snapshot
 
-This snapshot includes the first 2 Assignment 8 modules. Assignments 5-7 remain runnable. The final native console/report integration is included in module 4.
+This snapshot includes the first 3 Assignment 8 modules. Assignments 5-7 remain runnable. The final native console/report integration is included in module 4.
 
 ## Build and test
 
@@ -12,7 +12,7 @@ dotnet run --project tests/BoardGameRental.Tests
 dotnet run --project src/BoardGameRental.App -- --demo7
 ```
 
-Latest verification on 2026-10-29: **71/71 passed; 0 failed**, build with 0 warnings/errors. The original 55 tests remain included. New query modules are exercised by assertions; the Assignment 8 application entry point is added with the native integration module.
+Latest verification on 2026-10-29: **79/79 passed; 0 failed**, build with 0 warnings/errors. The original 55 tests remain included. New query modules are exercised by assertions; the Assignment 8 application entry point is added with the native integration module.
 
 ## Team, group IT-2511
 
@@ -38,6 +38,14 @@ The iterator does no processing until enumeration. Its ordering buffers input be
 `CategoryReports.Inventory` consumes StockAssessment records, groups by ordinal case-sensitive category, projects Count/Sum totals, orders by daily value descending then category ascending. Expected categories: Strategy(3 titles,3 copies,4000 KZT,3 to buy), Family(1,2,2000,0), Card(1,3,1500,0), Classic(1,1,0,1). The native assessments are supplied by module 4; current grouping assertions use manually specified assessment fixtures.
 
 `ReportRequest.Create` validates days 1..30, budget 0..1000000000 with at most 2 decimals, and target copies 0..Int32.MaxValue. ReportInput reuses the earlier full-catalog validation rules. Zero price and zero stock remain distinct; malformed/duplicate catalog rows are rejected.
+
+## Workflow and resource note
+
+ReportWorkflow.Load/Build/Export composition is exposed by `Run`. The IStockPlanner dependency will receive the native adapter in module 4; current workflow tests use a controlled fixture. The workflow validates an independent snapshot, invokes its planner once per game, and calls ToArray with read-only wrappers before repeated use. No file stream is retained by a lazy query.
+
+ReportExport.Save creates a FileStream and transfers it to WriteAndClose, whose using closes it on success and write/flush failure. Save writes a same-directory GUID temporary file and replaces the destination only after closing; finally removes temporary data, subject to external permissions/locks. Existing output survives failed replacement and source=output is rejected. CatalogBoundary uses File.ReadAllText, which closes its internal handle before returning. Tests assert stream disposal and observable cleanup after successful/failed operations.
+
+Validation, sorting and grouping allocate O(n) data. Snapshots deliberately retain result rows for stable display/export, avoiding repeated computation. Iterators retain source/delegate until released; price closures retain no dataset. No growing cache, event subscription or long-lived dataset collection is present. Tests use unique temporary directories and finally cleanup.
 
 ## Earlier behaviour
 

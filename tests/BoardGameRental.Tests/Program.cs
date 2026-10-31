@@ -78,7 +78,15 @@ internal static partial class Program
             ("A8CategoryTies", A8CategoryTies),
             ("A8CategoryZeros", A8CategoryZeros),
             ("A8ReportRequestRules", A8ReportRequestRules),
-            ("A8InvalidCatalogRejected", A8InvalidCatalogRejected)
+            ("A8InvalidCatalogRejected", A8InvalidCatalogRejected),
+            ("A8MaterializedSnapshot", A8MaterializedSnapshot),
+            ("A8ExportSuccessDisposes", A8ExportSuccessDisposes),
+            ("A8ExportFailureDisposes", A8ExportFailureDisposes),
+            ("A8ExportReplacesExisting", A8ExportReplacesExisting),
+            ("A8ExportFailurePreservesExisting", A8ExportFailurePreservesExisting),
+            ("A8WorkflowSnapshot", A8WorkflowSnapshot),
+            ("A8MissingReportFile", A8MissingReportFile),
+            ("A8MalformedReportFile", A8MalformedReportFile)
         };
 
         int failures = 0;

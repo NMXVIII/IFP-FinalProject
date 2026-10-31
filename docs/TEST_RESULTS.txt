@@ -1,4 +1,4 @@
-Assignment 8 snapshot 2 - latest verification: 2026-10-29
+Assignment 8 snapshot 3 - latest verification: 2026-10-29
 Windows 11 x64; .NET SDK 8.0.425; build with 0 warnings and 0 errors.
 dotnet run --project tests/BoardGameRental.Tests
 
@@ -73,5 +73,13 @@ PASS: A8CategoryTies
 PASS: A8CategoryZeros
 PASS: A8ReportRequestRules
 PASS: A8InvalidCatalogRejected
+PASS: A8MaterializedSnapshot
+PASS: A8ExportSuccessDisposes
+PASS: A8ExportFailureDisposes
+PASS: A8ExportReplacesExisting
+PASS: A8ExportFailurePreservesExisting
+PASS: A8WorkflowSnapshot
+PASS: A8MissingReportFile
+PASS: A8MalformedReportFile
 
-71/71 passed; 0 failed.
+79/79 passed; 0 failed.
