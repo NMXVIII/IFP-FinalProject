@@ -1,6 +1,6 @@
 # BoardGameRental - Assignment 8 development snapshot
 
-This snapshot includes the first 1 Assignment 8 modules. Assignments 5-7 remain runnable. The final native console/report integration is included in module 4.
+This snapshot includes the first 2 Assignment 8 modules. Assignments 5-7 remain runnable. The final native console/report integration is included in module 4.
 
 ## Build and test
 
@@ -12,7 +12,7 @@ dotnet run --project tests/BoardGameRental.Tests
 dotnet run --project src/BoardGameRental.App -- --demo7
 ```
 
-Latest verification on 2026-10-29: **63/63 passed; 0 failed**, build with 0 warnings/errors. The original 55 tests remain included. New query modules are exercised by assertions; the Assignment 8 application entry point is added with the native integration module.
+Latest verification on 2026-10-29: **71/71 passed; 0 failed**, build with 0 warnings/errors. The original 55 tests remain included. New query modules are exercised by assertions; the Assignment 8 application entry point is added with the native integration module.
 
 ## Team, group IT-2511
 
@@ -30,6 +30,14 @@ Latest verification on 2026-10-29: **63/63 passed; 0 failed**, build with 0 warn
 `RentalReports.AffordableRentals` uses both extensions: Where -> Select -> Where -> OrderBy(price) -> ThenBy(ID), followed by yield return. Inputs must be validated and the supplied price function pure. For the sample, 3 days and budget 3000, standard IDs are 4,2,1 with totals 0,1500,3000. Empty and no-match input gives an empty report; equal prices sort by ID.
 
 The iterator does no processing until enumeration. Its ordering buffers input before yielding the first row. Test-local probes observe 0 records/prices before iteration and 6/5 afterward. A second enumeration recomputes. The source enumerator is disposed after processing or early stop; the query opens no resource.
+
+## Configuration and category totals
+
+`ReportPricing.CreatePrice` is curried: tariff -> days -> game -> price. Fixing Standard/Student and 3 days creates two functions used on the same catalog. Uno costs 1500 versus 1200 KZT; student adds Carcassonne at the 3000 budget. The closures retain only tariff and duration.
+
+`CategoryReports.Inventory` consumes StockAssessment records, groups by ordinal case-sensitive category, projects Count/Sum totals, orders by daily value descending then category ascending. Expected categories: Strategy(3 titles,3 copies,4000 KZT,3 to buy), Family(1,2,2000,0), Card(1,3,1500,0), Classic(1,1,0,1). The native assessments are supplied by module 4; current grouping assertions use manually specified assessment fixtures.
+
+`ReportRequest.Create` validates days 1..30, budget 0..1000000000 with at most 2 decimals, and target copies 0..Int32.MaxValue. ReportInput reuses the earlier full-catalog validation rules. Zero price and zero stock remain distinct; malformed/duplicate catalog rows are rejected.
 
 ## Earlier behaviour
 

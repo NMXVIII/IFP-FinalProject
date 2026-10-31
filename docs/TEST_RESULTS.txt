@@ -1,4 +1,4 @@
-Assignment 8 snapshot 1 - latest verification: 2026-10-29
+Assignment 8 snapshot 2 - latest verification: 2026-10-29
 Windows 11 x64; .NET SDK 8.0.425; build with 0 warnings and 0 errors.
 dotnet run --project tests/BoardGameRental.Tests
 
@@ -65,5 +65,13 @@ PASS: A8AffordableNoMatches
 PASS: A8AffordableTies
 PASS: A8DeferredTiming
 PASS: A8DeferredEarlyStop
+PASS: A8ConfiguredSameInput
+PASS: A8ConfiguredRounding
+PASS: A8CategoryTotals
+PASS: A8CategoryEmpty
+PASS: A8CategoryTies
+PASS: A8CategoryZeros
+PASS: A8ReportRequestRules
+PASS: A8InvalidCatalogRejected
 
-63/63 passed; 0 failed.
+71/71 passed; 0 failed.

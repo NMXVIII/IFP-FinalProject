@@ -70,7 +70,15 @@ internal static partial class Program
             ("A8AffordableNoMatches", A8AffordableNoMatches),
             ("A8AffordableTies", A8AffordableTies),
             ("A8DeferredTiming", A8DeferredTiming),
-            ("A8DeferredEarlyStop", A8DeferredEarlyStop)
+            ("A8DeferredEarlyStop", A8DeferredEarlyStop),
+            ("A8ConfiguredSameInput", A8ConfiguredSameInput),
+            ("A8ConfiguredRounding", A8ConfiguredRounding),
+            ("A8CategoryTotals", A8CategoryTotals),
+            ("A8CategoryEmpty", A8CategoryEmpty),
+            ("A8CategoryTies", A8CategoryTies),
+            ("A8CategoryZeros", A8CategoryZeros),
+            ("A8ReportRequestRules", A8ReportRequestRules),
+            ("A8InvalidCatalogRejected", A8InvalidCatalogRejected)
         };
 
         int failures = 0;

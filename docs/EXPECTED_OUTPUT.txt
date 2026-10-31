@@ -1,4 +1,4 @@
-Assignment 8 snapshot 1: expected assertions 63/63 passed; 0 failed.
+Assignment 8 snapshot 2: expected assertions 71/71 passed; 0 failed.
 Retained Assignment 5 standard IDs: 4,2,1; student IDs: 4,2,1,6.
 Retained Assignment 7 Uno confirmation: total 1200.00 KZT.
 Query expected results and currently implemented requirements are documented in README.md.
