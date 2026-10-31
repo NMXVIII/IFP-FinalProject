@@ -78,13 +78,14 @@ internal static partial class Program
 
     private static void A8ExportFailurePreservesExisting() => A7WithTemporaryDirectory(directory =>
     {
+        // A directory already occupies the output path, so publishing fails on Windows, macOS and Linux alike.
         string output = Path.Combine(directory, "report.json");
-        File.WriteAllText(output, "keep report");
-        using (var locked = new FileStream(output, FileMode.Open, FileAccess.Read, FileShare.None))
-            A7ErrorIs(ReportExport.Save(output, A8FixtureReports()), "ExportFailed");
-        Check(File.ReadAllText(output) == "keep report", "A failed publish changed the previous report.");
-        Check(Directory.GetFiles(directory).Length == 1, "Temporary export file remained after failure.");
-        File.Delete(output);
+        Directory.CreateDirectory(output);
+        string marker = Path.Combine(output, "keep.txt");
+        File.WriteAllText(marker, "keep report");
+        A7ErrorIs(ReportExport.Save(output, A8FixtureReports()), "ExportFailed");
+        Check(File.ReadAllText(marker) == "keep report", "A failed publish changed the previous output.");
+        Check(Directory.GetFileSystemEntries(directory).Length == 1, "Temporary export file remained after failure.");
     });
 
     private static void A8WorkflowSnapshot() => A7WithTemporaryDirectory(directory =>

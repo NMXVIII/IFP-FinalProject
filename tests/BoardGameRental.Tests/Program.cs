@@ -86,7 +86,15 @@ internal static partial class Program
             ("A8ExportFailurePreservesExisting", A8ExportFailurePreservesExisting),
             ("A8WorkflowSnapshot", A8WorkflowSnapshot),
             ("A8MissingReportFile", A8MissingReportFile),
-            ("A8MalformedReportFile", A8MalformedReportFile)
+            ("A8MalformedReportFile", A8MalformedReportFile),
+            ("A8NativeRealCall", A8NativeRealCall),
+            ("A8NativeInvalidInputs", A8NativeInvalidInputs),
+            ("A8NativeLoadFailure", A8NativeLoadFailure),
+            ("A8NativeBindingFailures", A8NativeBindingFailures),
+            ("A8NativeSentinel", A8NativeSentinel),
+            ("A8FullNativeReportWorkflow", A8FullNativeReportWorkflow),
+            ("A8NativeFailurePreservesState", A8NativeFailurePreservesState),
+            ("A8NativeEmptyWorkflow", A8NativeEmptyWorkflow)
         };
 
         int failures = 0;

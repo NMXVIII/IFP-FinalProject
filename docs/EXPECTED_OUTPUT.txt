@@ -1,5 +1,23 @@
-Assignment 8 snapshot 3: expected assertions 79/79 passed; 0 failed.
-Retained Assignment 5 standard IDs: 4,2,1; student IDs: 4,2,1,6.
-Retained Assignment 7 Uno confirmation: total 1200.00 KZT.
-Query expected results and currently implemented requirements are documented in README.md.
-The complete Assignment 8 native/report CLI is supplied by the final module.
+Assignment 8 - expected normal output
+Command: dotnet run --project src/BoardGameRental.App -- --reports8
+
+BoardGameRental - Assignments 5, 6, 7 and 8
+
+Report 1: affordable one-copy rentals; 3 days; budget 3000.00 KZT
+Standard
+4 | Chess | Classic | 3 days | 0.00 KZT
+2 | Uno | Card | 3 days | 1500.00 KZT
+1 | Monopoly | Family | 3 days | 3000.00 KZT
+Student (20% discount)
+4 | Chess | Classic | 3 days | 0.00 KZT
+2 | Uno | Card | 3 days | 1200.00 KZT
+1 | Monopoly | Family | 3 days | 2400.00 KZT
+6 | Carcassonne | Strategy | 3 days | 3000.00 KZT
+
+Report 2: inventory by category; target 2 copies per title
+Category | Titles | Available | Daily stock value (KZT) | Copies to buy (native C)
+Strategy | 3 | 3 | 4000.00 | 3
+Family | 1 | 2 | 2000.00 | 0
+Card | 1 | 3 | 1500.00 | 0
+Classic | 1 | 1 | 0.00 | 1
+Exported: /Users/remarkxvii/IFP-FinalProject/reports.json
