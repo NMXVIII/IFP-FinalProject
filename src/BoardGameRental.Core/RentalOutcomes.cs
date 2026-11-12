@@ -20,12 +20,15 @@ public static class RentalOutcomes
     }
     public static Result<string> Book(IReadOnlyList<BoardGame> games, int id, int days,
         int quantity, decimal budget, RentalTariff? tariff) =>
+        BookState(games, id, days, quantity, budget, tariff).Map(DescribeConfirmation);
+
+    public static Result<RentalState> BookState(IReadOnlyList<BoardGame> games, int id, int days,
+        int quantity, decimal budget, RentalTariff? tariff) =>
         CatalogLookup.Find(games, id)
             .ToResult(new AppError("GameNotFound", $"Game {id} was not found in the catalog."))
             .Map<RentalState>(game => new RentalState.Draft(new RentalDraft(game, days, quantity, budget, tariff)))
             .Bind(Prepare)
-            .Bind(Confirm)
-            .Map(DescribeConfirmation);
+            .Bind(Confirm);
 
     private static Result<RentalState> Fail(string code, string message) =>
         new Result<RentalState>.Failure(new AppError(code, message));
