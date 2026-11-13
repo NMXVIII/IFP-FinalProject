@@ -98,7 +98,11 @@ internal static partial class Program
             ("FinalReturnLate", FinalReturnLate),
             ("FinalReturnEarlyOrOnTime", FinalReturnEarlyOrOnTime),
             ("FinalReturnInvalidState", FinalReturnInvalidState),
-            ("FinalReturnInvalidDays", FinalReturnInvalidDays)
+            ("FinalReturnInvalidDays", FinalReturnInvalidDays),
+            ("FinalExtensionSuccess", FinalExtensionSuccess),
+            ("FinalExtensionInvalidState", FinalExtensionInvalidState),
+            ("FinalExtensionDuration", FinalExtensionDuration),
+            ("FinalExtensionBudget", FinalExtensionBudget)
         };
 
         int failures = 0;
