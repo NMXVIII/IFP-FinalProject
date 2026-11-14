@@ -102,7 +102,12 @@ internal static partial class Program
             ("FinalExtensionSuccess", FinalExtensionSuccess),
             ("FinalExtensionInvalidState", FinalExtensionInvalidState),
             ("FinalExtensionDuration", FinalExtensionDuration),
-            ("FinalExtensionBudget", FinalExtensionBudget)
+            ("FinalExtensionBudget", FinalExtensionBudget),
+            ("FinalStockReceiptImmutable", FinalStockReceiptImmutable),
+            ("FinalStockReceiptInvalid", FinalStockReceiptInvalid),
+            ("FinalStockReceiptRoundTrip", FinalStockReceiptRoundTrip),
+            ("FinalStockReceiptNoOverwrite", FinalStockReceiptNoOverwrite),
+            ("FinalStockReceiptFileFailures", FinalStockReceiptFileFailures)
         };
 
         int failures = 0;
